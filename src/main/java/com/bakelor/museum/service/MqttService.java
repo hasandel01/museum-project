@@ -51,7 +51,6 @@ public class MqttService implements MqttCallback {
     private final int qos = 2;
 
     private BeaconData updatedData;
-    private BeaconData previousData;
     private final ObjectMapper objectMapper = new ObjectMapper();  // Jackson ObjectMapper
 
     @PostConstruct
@@ -113,12 +112,8 @@ public class MqttService implements MqttCallback {
                     if (newData != null) {
                         // Log the deserialized object
                         synchronized (this) {
-                            // Log the update
-                            previousData = updatedData;
                             this.updatedData = newData;
-
                             logger.info("Updated data: {}", updatedData);
-                            logger.info("Previous data: {}", previousData);
                         }
 
                     } else {

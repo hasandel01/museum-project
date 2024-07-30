@@ -16,6 +16,12 @@ public class BeaconData {
     @JsonProperty("HubId")
     private String hubId;
 
+    @JsonProperty("HubIp")
+    private String hubIp;
+
+    @JsonProperty("HubName")
+    private String hubName;
+
     @JsonProperty("SampleCount")
     private int sampleCount;
 
@@ -51,4 +57,28 @@ public class BeaconData {
 
     @JsonProperty("ContentType")
     private int contentType;
+
+    @JsonProperty("DeviceType")
+    private String deviceType;
+
+    @JsonProperty("Type")
+    private String type;
+
+    @JsonProperty("Longitude")
+    private String longitude;
+
+    @JsonProperty("Latitude")
+    private String latitude;
+
+    @JsonProperty("Status")
+    private String status;
+
+    @JsonProperty("Signal")
+    private String signal;
+
+    @JsonProperty("CpuTemperature")
+    private int cpuTemperature;
+
+    @JsonProperty("Detail")
+    private List<String> detail;
 }
