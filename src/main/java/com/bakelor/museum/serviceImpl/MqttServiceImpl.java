@@ -42,6 +42,9 @@ public class MqttServiceImpl implements MqttService {
     @Value("${mqtt.nearestTopic}")
     private String nearestTopic;
 
+    @Value(("bakelor/product/pr14/scan/nearest/"))
+    private String nearestTopicBase;
+
     private MqttClient client;
 
     private final WebSocketHandler webSocketHandler;
@@ -110,14 +113,12 @@ public class MqttServiceImpl implements MqttService {
         try {
             if(topic.equals(sensorTopic)) {
                 BeaconData beaconData = objectMapper.readValue(payload, BeaconData.class);
-                webSocketHandler.sendMessage(beaconData);
+                webSocketHandler.sendMessage(0,beaconData);
             }
-            else if(topic.equals(nearestTopic + "/" + )) {
+            else if(topic.equals(nearestTopicBase + "0000c417c36b12d2")) {
                 BeaconProximity beaconProximity = objectMapper.readValue(payload, BeaconProximity.class);
-                webSocketHandler.sendMessage(beaconProximity);
+                webSocketHandler.sendMessage( 1,beaconProximity);
             }
-            else
-                    logger.info("Data in hand is null!");
 
         } catch (JsonProcessingException e) {
             logger.error(e.getMessage());

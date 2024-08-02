@@ -1,7 +1,6 @@
 package com.bakelor.museum.handler;
 
-import com.bakelor.museum.dto.BeaconData;
-import com.bakelor.museum.dto.BeaconProximity;
+import com.bakelor.museum.dto.MessageDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -47,15 +46,21 @@ public class WebSocketHandler extends TextWebSocketHandler {
         return false;
     }
 
-    public void sendMessage(Object object) throws IOException {
-        // Convert the BeaconData object to JSON and send it to all connected clients
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonMessage = objectMapper.writeValueAsString(object);
-        for (WebSocketSession session : sessions) {
-            if (session.isOpen()) {
-                session.sendMessage(new TextMessage(jsonMessage));
+    public void sendMessage(int type, Object object) throws IOException {
+        try {
+            // Convert the BeaconData object to JSON and send it to all connected clients
+            MessageDTO messageDTO = new MessageDTO(type,object);
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonMessage = objectMapper.writeValueAsString(messageDTO);
+            for (WebSocketSession session : sessions) {
+                if (session.isOpen()) {
+                    session.sendMessage(new TextMessage(jsonMessage));
+                }
             }
+        } catch(IOException e) {
+            System.out.println("Error sending WebSocket message: " + e.getMessage());;
         }
+
     }
 
 }
